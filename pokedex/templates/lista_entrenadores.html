@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Lista de Entrenadores{% endblock title %}
+
+{% block content %}
+<br>
+
+{% if user.is_authenticated %}
+    <a href="{% url 'pokedex:add_entrenador' %}" class="btn btn-success mb-3">
+        <i class="fa-solid fa-user-plus"></i> Crear Entrenador
+    </a>
+{% endif %}
+
+<div class="row">
+    {% for entrenador in entrenadores %}
+    <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                {% if entrenador.picture %}
+                    <img src="{{ entrenador.picture.url }}" alt="{{ entrenador.name }}" class="img-thumbnail">
+                {% else %}
+                     <p>No hay imagen disponible</p>
+                {% endif %}
+                <h5 class="card-title">{{ entrenador.name }} {{ entrenador.lastname }}</h5>
+                <p class="card-text">Nivel: {{ entrenador.level }}</p>
+
+                {% if user.is_authenticated %}
+                <a href="{% url 'pokedex:edit_entrenador' entrenador.id %}" class="btn btn-secondary">
+                    <i class="fa-solid fa-pencil"></i> Editar
+                </a>
+                <a href="{% url 'pokedex:delete_entrenador' entrenador.id %}" class="btn btn-danger">
+                    <i class="fa-solid fa-trash"></i> Eliminar
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

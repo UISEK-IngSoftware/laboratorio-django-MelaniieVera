@@ -1,13 +1,40 @@
 {% extends "base.html" %}
-{% block title %}Listado de Pokemon{% endblock title %}
+{% block title %}{{ pokemon.name|capfirst }} - Detalles{% endblock title %}
+
 {% block content %}
-<br>
-<p>Has elegido el pokemon: <strong>{{ pokemon | capfirst }}</strong></p>
-<h3>Características</h3>
-<ul>
-    <li>Tipo: {{ pokemon.type }}</li>
-    <li>Peso: {{ pokemon.weight }} Kg.</li>
-    <li>Altura: {{ pokemon.height }} cm.</li>
-</ul>
-<img src="{{ pokemon.picture.url }}" alt="{{ pokemon.name }}" class="img-thumbnail">
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                {% if pokemon.picture %}
+                    <img src="{{ pokemon.picture.url }}" class="card-img-top mx-auto d-block" style="max-width: 300px;" alt="{{ pokemon.name }}">
+
+                {% else %}
+                    <img src="https://via.placeholder.com/500x300.png?text=Sin+Imagen" class="card-img-top" alt="No hay imagen disponible">
+                {% endif %}
+
+                <div class="card-body">
+                    <h2 class="card-title text-center">{{ pokemon.name|capfirst }}</h2>
+
+                    <ul class="list-group list-group-flush my-3">
+                        <li class="list-group-item"><strong>Tipo:</strong> {{ pokemon.type }}</li>
+                        <li class="list-group-item"><strong>Peso:</strong> {{ pokemon.weight }} Kg</li>
+                        <li class="list-group-item"><strong>Altura:</strong> {{ pokemon.height }} cm</li>
+                        {% if pokemon.entrenador %}
+                            <li class="list-group-item">
+                                <strong>Entrenador:</strong> 
+                                {{ pokemon.entrenador.name }} {{ pokemon.entrenador.lastname }} 
+                                (Nivel {{ pokemon.entrenador.level }})
+                            </li>
+                        {% endif %}
+                    </ul>
+
+                    <div class="text-center">
+                        <a href="{% url 'pokedex:index' %}" class="btn btn-outline-primary mt-2">Volver al listado</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

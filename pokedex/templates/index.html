@@ -1,17 +1,36 @@
 {% extends "base.html" %}
 {% block title %}Listado de Pokemon{% endblock title %}
 {% block content %}
-<p class="p-2">Hola, este es tu primer sitio en Django</p>
+<p class="p-2">Bienvenidos a mi Pokedex</p>
+
+{% if user.is_authenticated %}
+    <a href="{% url 'pokedex:add_pokemon' %}" class="btn btn-success mb-3">
+        <i class="fa-solid fa-user-plus"></i> Añadir Pokemon
+    </a>
+{% endif %}
+
 <ul class="list-group">
     <div class="row">
         {% for pokemon in pokemons %}
         <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
             <div class="card h-100">
-                <img src="{{ pokemon.picture.url }}" alt="{{ pokemon.name }}" class="card-img-top">
+                {% if pokemon.picture %}
+                    <img src="{{ pokemon.picture.url }}" alt="{{ pokemon.name }}" class="card-img-top">
+                {% else %}
+                    <p>No hay imagen disponible</p>
+                {% endif %}
+
+                
                 <div class="card-body">
                     <h5 class="card-title">{{ pokemon.name }}</h5>
                     <p class="card-text">
                         Peso: {{ pokemon.weight }} | Altura: {{ pokemon.height }}
+                        {% if pokemon.entrenador %}
+                            <p class="card-text">
+                                Entrenador: {{ pokemon.entrenador.name }} {{ pokemon.entrenador.lastname }}
+                            </p>
+                        {% endif %}
+
                     </p>
                     <a class="btn btn-primary" href="{% url 'pokedex:detail' pokemon.id %}" role="button">
                         <i class="fa-solid fa-eye"></i>

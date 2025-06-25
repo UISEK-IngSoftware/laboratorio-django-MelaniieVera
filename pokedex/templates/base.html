@@ -26,11 +26,17 @@
                                     <a class="nav-link" href="{% url 'pokedex:add_pokemon' %}">Añadir Pokemon</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'pokedex:lista_entrenadores' %}">Ver entrenadores</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
                                 </li>
                             {% else %}
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url 'pokedex:login' %}">Iniciar sesión</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'pokedex:lista_entrenadores' %}">Ver entrenadores</a>
                                 </li>
                             {% endif %}
                         </ul>
