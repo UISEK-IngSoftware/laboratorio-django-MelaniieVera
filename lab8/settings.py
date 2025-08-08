@@ -37,10 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pokedex'
+    'rest_framework',
+    'oauth2_provider',
+    'corsheaders',
+    'pokedex',
+    'api'
+    
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -48,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
 ]
 
 ROOT_URLCONF = 'lab8.urls'
@@ -129,3 +136,41 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = 'pokedex:login'
+
+
+OAUTH2_PROVIDER = {
+
+}
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+
+AUTHENTICATION_BACKENDS = (
+
+    'oauth2_provider.backends.OAuth2Backend',
+
+    'django.contrib.auth.backends.ModelBackend'
+
+)
+
+ 
+
+REST_FRAMEWORK = {
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+
+        'rest_framework.authentication.SessionAuthentication',
+
+    ),
+
+    'DEFAULT_PERMISSION_CLASSES': (
+
+        'rest_framework.permissions.AllowAny',
+
+    ),
+
+}
